@@ -1,11 +1,28 @@
+import { UPDATE_USER } from './../../actions/action-types/userTypes';
 import { Action } from "redux";
+interface ISTATE {
+    username: string;
+}
 
-export const userReducer = (
-    state: string = "User1",
-    action: Action<string> & { payload: { data: string } }
-  ) => {
-    if (action.type === "new state") {
-      return action.payload.data;
+interface IACTION extends Action<string> {
+    payload: {
+        username: string
     }
-    return state;
+}
+
+const initialState: ISTATE = {
+    username: "Elmar"
+}
+
+
+export const userReducer = ( state: ISTATE = initialState, action: IACTION) => {
+        switch(action.type){
+            case UPDATE_USER:
+                return {
+                    ...state,
+                    username: action.payload.username
+                }
+
+            default : return state
+        }
 };
