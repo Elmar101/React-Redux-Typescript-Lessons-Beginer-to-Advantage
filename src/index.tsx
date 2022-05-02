@@ -1,13 +1,15 @@
-import React, { ReducerState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Action, createStore, combineReducers} from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const userReducer = (state: string = "User1" , action: Action<string> & { payload: {data: string} }) => {
   if(action.type==="new state"){return action.payload.data}
   return state
 };
+
 const productReducer = (state: {name: string}[] = [{name:"IPone 5C"}] , action: Action<string> & { payload: {data: {name: string }[]} }) => {
   return state
 };
@@ -17,19 +19,17 @@ const rootReducer  = combineReducers({
   products: productReducer
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer , composeWithDevTools() );
 
 
-store.subscribe(()=>{
-  console.log(store.getState());
-})
-//console.log(store.getState());
+
+console.log(store.getState());
 const actionDispatch:Action<string> & { payload: {data: string} } = {
   type: "new state",
   payload: {data: "User2"}
 }
 
-store.dispatch(actionDispatch);
+store.dispatch(actionDispatch); 
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
