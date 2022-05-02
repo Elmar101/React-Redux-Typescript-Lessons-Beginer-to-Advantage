@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import './App.scss';
 
 function App() {
@@ -8,4 +9,4 @@ function App() {
   );
 }
  
-export default App;
+export default connect()(App);
